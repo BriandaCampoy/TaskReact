@@ -1,16 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useSubjects from '../../hooks/useSubject';
+import DateFormaterInput from '../../utils/DateFormaterInput';
 
+/**
+ * TaskForm Component
+ * Renders a form to create or update a task.
+ *
+ * @param {function} actionSubmit - Callback function for submitting the form.
+ * @param {object} task - Task object for pre-filling form fields when editing.
+ * @returns {JSX.Element} The JSX element representing the TaskForm component.
+ */
 const TaskForm = ({ actionSubmit, task }) => {
+  /**
+   * Handles the form submission event.
+   * Collects input values, constructs a task object, and invokes the actionSubmit callback.
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
     const formTask = {
       title: titleRef.current.value,
       description: descriptionRef.current.value,
-      subject: subjectRef.current.value,
+      subject:sub,
       type: typeRef.current.value
     };
-    if(deadlineRef.current.value!==''){
+    if (deadlineRef.current.value !== '') {
       formTask.deadline = deadlineRef.current.value;
     }
     actionSubmit(formTask);
@@ -20,9 +34,13 @@ const TaskForm = ({ actionSubmit, task }) => {
 
   const titleRef = useRef();
   const descriptionRef = useRef();
-  const subjectRef = useRef();
   const deadlineRef = useRef();
   const typeRef = useRef();
+  const [sub, setSub] = useState();
+
+  const handleSubChange = (event)=>{
+    setSub(event.target.value)
+  }
 
   useEffect(() => {
     getSubjects().then((res) => {
@@ -30,9 +48,9 @@ const TaskForm = ({ actionSubmit, task }) => {
     });
     if (task != undefined) {
       descriptionRef.current.value = task.description;
-      subjectRef.current.value = task.subject._id;
       titleRef.current.value = task.title;
-      deadlineRef.current.value = new Date(task.deadline);
+      deadlineRef.current.value = DateFormaterInput(task.deadline);
+      setSub(task.subject._id)
       typeRef.current.value = task.type;
     }
   }, []);
@@ -66,7 +84,9 @@ const TaskForm = ({ actionSubmit, task }) => {
           id="InputSubject"
           placeholder="Subject"
           name="Subject"
-          ref={subjectRef}
+          // ref={subjectRef}
+          value={sub}
+          onChange={handleSubChange}
           required
         >
           {subjects.map((sub) => (
@@ -74,7 +94,6 @@ const TaskForm = ({ actionSubmit, task }) => {
               {sub.name}
             </option>
           ))}
-          {/* <option *ngFor="let subjectOption of subjectsOptions" value={{subjectOption._id}}>{{subjectOption.name}}</option> */}
         </select>
       </div>
       <div className="form-group row">
@@ -87,7 +106,6 @@ const TaskForm = ({ actionSubmit, task }) => {
             name="deadline"
             ref={deadlineRef}
             required
-            // [(ngModel)]="task.deadline"
           />
         </div>
         <div className="col-sm-6">

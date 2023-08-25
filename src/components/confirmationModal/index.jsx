@@ -1,5 +1,17 @@
 import React from 'react';
 
+/**
+ * ConfirmationModal Component
+ * Renders a modal dialog for displaying a confirmation prompt with a title, message, and buttons for confirmation and cancellation.
+ *
+ * @component
+ * @param {string} title - The title of the confirmation dialog.
+ * @param {string} message - The message displayed in the confirmation dialog.
+ * @param {function} onClose - Callback function to handle modal close action.
+ * @param {function} onConfirm - Callback function to handle confirmation action.
+ * @returns {JSX.Element} Renders a modal dialog for confirmation.
+ */
+
 const ConfirmationModal = ({ title, message, onClose, onConfirm }) => {
   const modalStyle = {
     display: 'block',
@@ -25,10 +37,18 @@ const ConfirmationModal = ({ title, message, onClose, onConfirm }) => {
             <p>{message}</p>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
-            <button type="button" className="btn btn-danger" onClick={onConfirm}>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={onConfirm}
+            >
               Confirmar
             </button>
           </div>

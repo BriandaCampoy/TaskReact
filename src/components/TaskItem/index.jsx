@@ -2,6 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DoneCheck from '../DoneCheck';
 
+/**
+ * TaskItem Component
+ * Displays an individual task item with its details.
+ *
+ * @param {object} taskItem - The task object to be displayed.
+ * @returns {JSX.Element} The JSX element representing the TaskItem component.
+ */
 const TaskItem = ({ taskItem }) => {
   const navigation = useNavigate();
   const borderBottomStyle = {
@@ -15,6 +22,9 @@ const TaskItem = ({ taskItem }) => {
     textDecoration: taskItem.done ? 'line-through' : 'none'
   };
 
+  /**
+   * Navigates to the detailed view of the task.
+   */
   const onSeeDetails = () => {
     navigation(`/task/${taskItem._id}`);
   };
@@ -41,7 +51,7 @@ const TaskItem = ({ taskItem }) => {
               {taskItem.title}
             </div>
           </div>
-          <DoneCheck id={taskItem._id} doneStatus={taskItem.done} />
+          <DoneCheck id={taskItem._id} doneStatus={taskItem.done}/>
         </div>
       </div>
     </div>

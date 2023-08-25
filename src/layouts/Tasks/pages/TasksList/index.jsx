@@ -3,6 +3,12 @@ import { NavLink } from 'react-router-dom';
 import TaskList from '../../../../components/TaskList';
 import useTasks from '../../../../hooks/useTask';
 
+/**
+ * TasksList Component
+ * This component displays a list of tasks, along with search functionality and an option to add a new task.
+ *
+ * @returns {JSX.Element} The JSX element representing the TasksList component.
+ */
 const TasksList = () => {
   const [taskList, setTaskList] = useState([]);
   const { getTasks } = useTasks();
@@ -14,17 +20,24 @@ const TasksList = () => {
     });
   }, []);
 
+  /**
+   * Handles the search for tasks based on the entered text.
+   * @param {Event} event - The form submit event.
+   */
   const handleSearch = (event) => {
     event.preventDefault();
-    getTasks(searchRef.current.value).then(res=>{
+    getTasks(searchRef.current.value).then((res) => {
       setTaskList(res);
-    })
+    });
   };
 
   return (
     <div className="container-fluid">
       <div className="row g-3">
-        <form onSubmit={handleSearch} className="col-md-4 d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <form
+          onSubmit={handleSearch}
+          className="col-md-4 d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+        >
           <div className="input-group">
             <input
               type="text"
@@ -35,10 +48,7 @@ const TasksList = () => {
               ref={searchRef}
             />
             <div className="input-group-append">
-              <button
-                className="btn btn-primary"
-                type="submit"
-              >
+              <button className="btn btn-primary" type="submit">
                 <i className="fas fa-search fa-sm"></i>
               </button>
             </div>

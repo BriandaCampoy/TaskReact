@@ -4,15 +4,22 @@ import profilePhoto from '../../assets/img/undraw_profile.svg';
 import useSubjects from '../../hooks/useSubject';
 import SubjectItem from '../../components/SubjectItem';
 
+/**
+ * Profile Component
+ * This component displays the user's profile information, including their name, email,
+ * profile photo, and the list of subjects they are associated with.
+ *
+ * @returns {JSX.Element} The JSX element representing the Profile component.
+ */
 const Profile = () => {
   const { user } = useAuthContext();
   const { getSubjects } = useSubjects();
-  const [subjects, setSubjects] = useState([])
+  const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-    getSubjects().then(res=>{
-      setSubjects(res)
-    })
+    getSubjects().then((res) => {
+      setSubjects(res);
+    });
   }, []);
 
   return (
@@ -31,13 +38,9 @@ const Profile = () => {
               <h1 className="h3 mb-0 text-gray-800">Subjects</h1>
             </div>
             <div className="row">
-              {subjects.map((sub)=>(
-                <SubjectItem key={sub._id} subjectItem={sub}/>
+              {subjects.map((sub) => (
+                <SubjectItem key={sub._id} subjectItem={sub} />
               ))}
-              {/* <app-subject-item
-            *ngFor="let subject of subjectsUser"
-            [subjectItem]="subject"
-          ></app-subject-item> */}
             </div>
           </div>
         </div>

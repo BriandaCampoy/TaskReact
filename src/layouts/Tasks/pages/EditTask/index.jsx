@@ -3,12 +3,22 @@ import TaskForm from '../../../../components/TaskForm'
 import { useNavigate, useParams } from 'react-router-dom'
 import useTasks from '../../../../hooks/useTask'
 
+/**
+ * EditTask Component
+ * This component provides a form to edit an existing task.
+ *
+ * @returns {JSX.Element} The JSX element representing the EditTask component.
+ */
 const EditTask = () => {
   const {getTask, updateTask} = useTasks();
   const {id}=useParams()
   const [task, setTask] = useState()
   const navigate = useNavigate()
 
+  /**
+   * Handles the editing of the task.
+   * @param {object} updatedTask - The updated task object.
+   */
   const editTask=(updatedTask)=>{
     updateTask(id, updatedTask).then(res=>{
       navigate('../')

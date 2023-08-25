@@ -1,16 +1,55 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import profilePhoto from '../../assets/img/undraw_profile.svg';
 import { useAuthContext } from '../../context/useAuthContext';
 import toggleSidebar from '../../utils/toggleSidebar';
+import ConfirmationModal from '../confirmationModal';
 
+/**
+ * Nav Component
+ * Renders the top navigation bar with user information and options.
+ *
+ * @component
+ * @returns {JSX.Element} The top navigation bar.
+ */
 const Nav = () => {
+  const [showModal, setShowModal] = useState(false);
   const { user } = useAuthContext();
+  const navigate = useNavigate();
+  const { logout } = useAuthContext();
 
+  /**
+   * Shows the logout confirmation modal.
+   */
+  const askLogin = () => {
+    setShowModal(true);
+  };
+
+  /**
+   * Closes the logout confirmation modal.
+   */
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  /**
+   * Handles user logout.
+   */
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  /**
+   * Toggles the sidebar visibility.
+   */
   const onToggleSidebar = () => {
     toggleSidebar();
   };
 
+  /**
+   * Toggles the user dropdown options.
+   */
   const onToggleDropdown = () => {
     const dropdown = document.querySelector('#dropdown-button');
     const options = document.querySelector('#dropdown-options');
@@ -22,7 +61,6 @@ const Nav = () => {
       options?.classList.add('show');
     }
   };
-  const onLogout = () => {};
 
   return (
     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -69,7 +107,7 @@ const Nav = () => {
             <div className="dropdown-divider"></div>
             <button
               className="dropdown-item"
-              onClick={onLogout}
+              onClick={askLogin}
               data-toggle="modal"
               data-target="#logoutModal"
             >
@@ -79,6 +117,14 @@ const Nav = () => {
           </div>
         </li>
       </ul>
+      {showModal && (
+        <ConfirmationModal
+          title={'Are you sure?'}
+          message={'You want to logout?'}
+          onClose={closeModal}
+          onConfirm={handleLogout}
+        />
+      )}
     </nav>
   );
 };

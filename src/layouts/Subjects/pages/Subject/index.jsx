@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
-import TaskItem from '../../../../components/TaskItem';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import useSubjects from '../../../../hooks/useSubject';
 import useTasks from '../../../../hooks/useTask';
+import ConfirmationModal from '../../../../components/confirmationModal';
+import TaskList from '../../../../components/TaskList';
 
+/**
+ * Subject Component
+ * This component displays detailed information about a specific subject, along with its tasks,
+ * and provides options to edit the subject, delete the subject, and add tasks to it.
+ *
+ * @returns {JSX.Element} The JSX element representing the Subject component.
+ */
 const Subject = () => {
   const [subject, setSubject] = useState();
   const [tasks, setTasks] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
-  const { getSubject } = useSubjects();
+  const { getSubject, deleteSubject } = useSubjects();
   const { getTasksBySubject } = useTasks();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getSubject(id).then((sub) => {
@@ -20,7 +30,28 @@ const Subject = () => {
     });
   }, []);
 
-  const onDelete = () => {};
+  /**
+   * Display the delete confirmation modal for the subject.
+   */
+  const askDeleteTask = () => {
+    setShowModal(true);
+  };
+
+  /**
+   * Close the delete confirmation modal.
+   */
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  /**
+   * Handle the deletion of the subject.
+   */
+  const handleDeleteSubject = () => {
+    deleteSubject(id).then((res) => {
+      navigate('../');
+    });
+  };
 
   if (subject === undefined) {
     return <>Loading...</>;
@@ -36,9 +67,8 @@ const Subject = () => {
                 title="edit subject"
               ></i>
             </NavLink>
-            <div className="btn btn-pointer">
+            <div onClick={askDeleteTask} className="btn btn-pointer">
               <i
-                onClick={onDelete}
                 title="delete subject"
                 className="fa-solid fa-trash fa-2xl m-3"
                 style={{ color: '#e11414' }}
@@ -58,9 +88,15 @@ const Subject = () => {
             </NavLink>
           </div>
         </div>
-        {tasks.map((task) => (
-          <TaskItem key={task._id} taskItem={task} />
-        ))}
+        <TaskList taskList={tasks} />
+        {showModal && (
+          <ConfirmationModal
+            title={'Are you sure?'}
+            message={'You want to delete this subject and all its tasks?'}
+            onClose={closeModal}
+            onConfirm={handleDeleteSubject}
+          />
+        )}
       </>
     );
   }

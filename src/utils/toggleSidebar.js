@@ -1,3 +1,7 @@
+/**
+ * Toggles the visibility of a sidebar by adding or removing CSS classes
+ * to the body and the sidebar element.
+ */
 const toggleSidebar = () => {
   const body = document.body;
   const sidebar = document.querySelector('.sidebar');
@@ -10,4 +14,4 @@ const toggleSidebar = () => {
   }
 };
 
-export default toggleSidebar
+export default toggleSidebar;

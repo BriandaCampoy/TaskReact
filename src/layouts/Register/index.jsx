@@ -1,19 +1,42 @@
 import React, { useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Redirect from '../../components/HOC/Redirect';
+import AuthService from '../../services/AuthService';
 
+/**
+ * Register Component
+ * This component provides a user interface for users to register for a new account.
+ *
+ * @returns {JSX.Element} The JSX element representing the Register component.
+ */
 const Register = () => {
   const [errorFlag, setErrorFlag] = useState('');
   const fullName = useRef();
   const email = useRef();
   const password = useRef();
   const confirmedPassword = useRef();
+  const navigate = useNavigate();
+
+  /**
+   * Handles the form submission for user registration.
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmitRegister = (event) => {
     event.preventDefault();
     if (confirmedPassword.current.value !== password.current.value) {
       setErrorFlag('Passwords must match');
     } else {
-      setErrorFlag('');
+      AuthService.register(
+        fullName.current.value,
+        email.current.value,
+        password.current.value
+      ).then((res) => {
+        if (res.error) {
+          setErrorFlag(res.message);
+        } else {
+          navigate('/login');
+        }
+      });
     }
   };
 
@@ -39,7 +62,6 @@ const Register = () => {
                         name="name"
                         ref={fullName}
                         required
-                        // [(ngModel)]="newUser.name"
                         className="form-control form-control-user"
                         id="exampleFirstName"
                         placeholder="Full Name"
@@ -51,7 +73,6 @@ const Register = () => {
                         name="email"
                         ref={email}
                         required
-                        // [(ngModel)]="newUser.email"
                         className="form-control form-control-user"
                         id="exampleInputEmail"
                         placeholder="Email Address"
@@ -65,7 +86,6 @@ const Register = () => {
                           ref={password}
                           minLength="6"
                           required
-                          // [(ngModel)]="newUser.password"
                           className="form-control form-control-user"
                           id="exampleInputPassword"
                           placeholder="Password"
@@ -78,7 +98,6 @@ const Register = () => {
                           ref={confirmedPassword}
                           minLength="6"
                           required
-                          // [(ngModel)]="newUser.confirmedPassword"
                           className="form-control form-control-user"
                           id="exampleRepeatPassword"
                           placeholder="Repeat Password"

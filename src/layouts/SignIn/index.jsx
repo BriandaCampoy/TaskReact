@@ -3,12 +3,23 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/useAuthContext';
 import Redirect from '../../components/HOC/Redirect';
 
+/**
+ * SignIn Component
+ * This component provides a user interface for users to sign in with their credentials.
+ *
+ * @returns {JSX.Element} The JSX element representing the SignIn component.
+ */
 const SignIn = () => {
   const { login } = useAuthContext();
   const email = useRef();
   const password = useRef();
   const navigate = useNavigate();
   const [errorFlag, setErrorFlag] = useState('');
+
+  /**
+   * Handles the form submission for user authentication.
+   * @param {Event} event - The form submission event.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await login(email.current.value, password.current.value);
@@ -46,8 +57,6 @@ const SignIn = () => {
                             id="exampleInputEmail"
                             aria-describedby="emailHelp"
                             placeholder="Enter Email Address..."
-
-                            // [(ngModel)]="user.email"
                           />
                         </div>
                         <div className="form-group">
@@ -60,7 +69,6 @@ const SignIn = () => {
                             className="form-control form-control-user"
                             id="exampleInputPassword"
                             placeholder="Password"
-                            // [(ngModel)]="user.password"
                           />
                         </div>
                         <div className="form-group row">
@@ -71,7 +79,6 @@ const SignIn = () => {
                           )}
                         </div>
                         <button
-                          // [disabled]="loginForm.invalid"
                           type="submit"
                           className="btn btn-primary btn-user btn-block"
                         >

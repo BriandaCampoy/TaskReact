@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * Footer Component
+ * Displays the website footer with copyright information.
+ *
+ * @component
+ * @returns {JSX.Element} Renders the footer section with copyright information.
+ */
 const Footer = () => {
   return (
     <footer className="sticky-footer bg-white">

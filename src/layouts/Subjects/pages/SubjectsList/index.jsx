@@ -3,6 +3,12 @@ import { NavLink } from 'react-router-dom';
 import useSubjects from '../../../../hooks/useSubject';
 import SubjectItem from '../../../../components/SubjectItem';
 
+/**
+ * SubjectsList Component
+ * This component displays a list of subjects and provides an option to add a new subject.
+ *
+ * @returns {JSX.Element} The JSX element representing the SubjectsList component.
+ */
 const SubjectsList = () => {
   const [subjects, setSubjects] = useState([]);
   const { getSubjects } = useSubjects();
@@ -30,11 +36,9 @@ const SubjectsList = () => {
 
       <div className="row m-4">
         <div className="col-lg-12">
-          {subjects.map((subject) =>(
-            <SubjectItem key={subject._id} subjectItem={subject}/>
-          ))
-
-          }
+          {subjects.map((subject) => (
+            <SubjectItem key={subject._id} subjectItem={subject} />
+          ))}
           {subjects.length == 0 && (
             <div>
               <h3>Nothing to show</h3>

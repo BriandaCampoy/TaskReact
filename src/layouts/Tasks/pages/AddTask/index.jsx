@@ -3,15 +3,25 @@ import TaskForm from '../../../../components/TaskForm';
 import useTasks from '../../../../hooks/useTask';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * AddTask Component
+ * This component provides a form to add a new task.
+ *
+ * @returns {JSX.Element} The JSX element representing the AddTask component.
+ */
 const AddTask = () => {
-  const {createTask} = useTasks();
-  const navigate = useNavigate()
+  const { createTask } = useTasks();
+  const navigate = useNavigate();
 
-  const handleCreateTask =(newTask)=>{
-    createTask(newTask).then(res=>{
-      navigate('/task')
+  /**
+   * Handles the creation of a new task.
+   * @param {object} newTask - The new task object to be created.
+   */
+  const handleCreateTask = (newTask) => {
+    createTask(newTask).then((res) => {
+      navigate('/task');
     });
-  }
+  };
 
   return (
     <div className="p-5">

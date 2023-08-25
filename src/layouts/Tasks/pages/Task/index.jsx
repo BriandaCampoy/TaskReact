@@ -5,6 +5,12 @@ import DateFormatter from '../../../../utils/DateFormater';
 import ConfirmationModal from '../../../../components/confirmationModal';
 import DoneCheck from '../../../../components/DoneCheck';
 
+/**
+ * Task Component
+ * This component displays detailed information about a specific task, including options to edit and delete the task.
+ *
+ * @returns {JSX.Element} The JSX element representing the Task component.
+ */
 const Task = () => {
   const { id } = useParams();
   const [taskItem, setTaskItem] = useState();
@@ -18,14 +24,23 @@ const Task = () => {
     });
   }, []);
 
+  /**
+   * Display the delete confirmation modal.
+   */
   const askDeleteTask = () => {
     setShowModal(true);
   };
 
+  /**
+   * Close the delete confirmation modal.
+   */
   const closeModal = () => {
     setShowModal(false);
   };
 
+  /**
+   * Handle the deletion of the task.
+   */
   const handleDeleteTask = () => {
     deleteTask(id).then((res) => {
       navigate('../');

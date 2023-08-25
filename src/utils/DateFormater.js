@@ -5,7 +5,7 @@
  */
 const DateFormater = (date) => {
   const d = new Date(date);
-  const day = d.getDate();
+  const day = d.getDate()+1;
   const month = d.getMonth() + 1;
   const year = d.getFullYear();
   const months = [

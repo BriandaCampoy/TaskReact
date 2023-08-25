@@ -1,6 +1,14 @@
 import React from 'react';
 import TaskItem from '../TaskItem';
 
+/**
+ * TaskList Component
+ * Renders a list of tasks using the TaskItem component.
+ *
+ * @param {object[]} taskList - An array of task objects to be displayed.
+ * @returns {JSX.Element} The JSX element representing the TaskList component.
+ */
+
 const TaskList = ({ taskList }) => {
   return (
     <div className="row m-4">

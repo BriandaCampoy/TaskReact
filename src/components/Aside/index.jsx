@@ -3,6 +3,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import toggleSidebar from '../../utils/toggleSidebar';
 
+/**
+ * Aside Component
+ * Renders the sidebar navigation for the application.
+ *
+ * @component
+ * @returns {JSX.Element} Renders the sidebar navigation.
+ */
 const Aside = () => {
   const onToggleSidebar = () => {
     toggleSidebar();
